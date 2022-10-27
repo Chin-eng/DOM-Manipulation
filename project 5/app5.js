@@ -3,8 +3,13 @@ myList = []
 const addTask = document.getElementById('add-task');
 const taskContainer = document.getElementById('task-container');
 const inputTask = document.getElementById('input-task');
+const leadFromLocalStorage = JSON.parse(localStorage.getItem("myList"))
 
 
+if (leadFromLocalStorage) {  
+    myList = leadFromLocalStorage;
+    render(myList);
+}
 
 //event listerer for add button
 
@@ -79,20 +84,28 @@ addTask.addEventListener('click', function() {
 
     myList.push(inputTask.value)
     inputTask.value = ""
+    localStorage.setItem("myList", JSON.stringify(myList))
+    console.log(leadFromLocalStorage)
     render(myList)
     
     
     const checkButton = document.querySelectorAll(".checkTask");
+    if (checkButton.length == 1) {
+        checkButton[0].addEventListener('click', function() {
+            checkButton[0].parentElement.style.textDecoration = "line-through"
+    })
+    }
     for (i = 0; i < checkButton.length; i++) {
         checkButton[i].addEventListener('click', function() {
             this.parentElement.style.textDecoration = "line-through"
         }) 
     }
-    
+
 })
 
 function deleteButton(index) {
     myList.splice(index, 1);
+    localStorage.setItem("myList", JSON.stringify(myList));
     render(myList);
 }
 
