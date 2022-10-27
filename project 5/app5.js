@@ -63,7 +63,7 @@ function render(leads) {
                 ${leads[i]} 
                 <button class="checkTask"> 
                     <i class = "fa-solid fa-check"></i>
-                <button class = "deleteTask"> 
+                <button class = "deleteTask" onclick = "deleteButton(${i})"> 
                     <i class = "fa-solid fa-trash-can"></i>
             </li>`
     }
@@ -72,11 +72,16 @@ function render(leads) {
 
 
 addTask.addEventListener('click', function() {
+    
+    if (inputTask.value === "") {
+        alert('Please Enter a Task')
+    } 
+
     myList.push(inputTask.value)
     inputTask.value = ""
     render(myList)
-
-
+    
+    
     const checkButton = document.querySelectorAll(".checkTask");
     for (i = 0; i < checkButton.length; i++) {
         checkButton[i].addEventListener('click', function() {
@@ -84,17 +89,12 @@ addTask.addEventListener('click', function() {
         }) 
     }
     
-    
-    
-    // checkButton.addEventListener('click', function() {
-    //     checkButton.parentElement.style.textDecoration = "line-through"
-    // })
-
-    // const deleteButton = document.querySelector(".deleteTask");
-    // deleteButton.addEventListener('click', function(e) {
-
-    // }) 
 })
+
+function deleteButton(index) {
+    myList.splice(index, 1);
+    render(myList);
+}
 
 
 
